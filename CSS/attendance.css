@@ -1,0 +1,95 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #2f58e0, #81C784);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.attendance-container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 1.8em;
+}
+
+.back-button {
+    padding: 10px 15px;
+    font-size: 1em;
+    color: #4CAF50;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #ddd;
+}
+
+.qr-checkin, .attendance-stats, .manual-checkin {
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.qr-checkin h2, .attendance-stats h2, .manual-checkin h2 {
+    margin-bottom: 10px;
+}
+
+.qr-code {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.qr-code img {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.stats p {
+    margin: 5px 0;
+    text-align: left;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #4CAF50;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ddd;
+}
