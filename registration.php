@@ -37,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into database
-    $query = "INSERT INTO AppUsers (username, password) VALUES (?, ?)";
-    $stmt = sqlsrv_prepare($conn, $query, [$email, $hashedPassword]);
+    $query = "INSERT INTO AppUsers (fullname, username, password) VALUES (?, ?, ?)";
+    $stmt = sqlsrv_prepare($conn, $query, [$fullname, $email, $hashedPassword]);
+
 
     if (sqlsrv_execute($stmt)) {
         echo "Registration successful!";
