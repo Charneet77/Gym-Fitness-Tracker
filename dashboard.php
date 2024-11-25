@@ -3,12 +3,12 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['email'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 
 // Fetch the user's name from the session or database
-$username = $_SESSION['username']; // Assuming 'username' was set during login
+$fullname = $_SESSION['fullname']; // Assuming 'username' was set during login
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ $username = $_SESSION['username']; // Assuming 'username' was set during login
 
         <!-- User Greeting -->
         <div class="welcome-message">
-            <h2>Welcome, <?php echo htmlspecialchars($username); ?>!</h2>
+            <h2>Welcome, <?php echo htmlspecialchars($fullname); ?>!</h2>
             <p>Here’s an overview of your fitness journey.</p>
         </div>
 
@@ -51,11 +51,11 @@ $username = $_SESSION['username']; // Assuming 'username' was set during login
 
         <!-- Navigation Section -->
         <div class="nav-buttons">
-            <button onclick="location.href='workout_plan.html'">Workout Plans</button>
-            <button onclick="location.href='attendance.html'">Attendance</button>
-            <button onclick="location.href='progress_tracking.html'">Progress Tracking</button>
-            <button onclick="location.href='schedule_appointments.html'">Appointments</button>
-            <button onclick="location.href='reports.html'">Reports</button>
+            <button onclick="location.href='workout_plan.php'">Workout Plans</button>
+            <button onclick="location.href='attendance.php'">Attendance</button>
+            <button onclick="location.href='progress_tracking.php'">Progress Tracking</button>
+            <button onclick="location.href='schedule_appointments.php'">Appointments</button>
+            <button onclick="location.href='reports.php'">Reports</button>
         </div>
     </div>
 
