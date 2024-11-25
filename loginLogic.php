@@ -10,32 +10,36 @@ $connectionOptions = [
 ];
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 if (!$conn) {
-    die(print_r(sqlsrv_errors(), true));
+    die("Database connection failed: " . print_r(sqlsrv_errors(), true));
 }
 
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = $_POST['email'];      // Get email from the form
+    $password = $_POST['password']; // Get password from the form
 
-    // Fetch user data from the database
-    $query = "SELECT fullname, password FROM AppUsers WHERE username = ?";
+    // Query to fetch user details
+    $query = "SELECT id, fullname, password FROM AppUsers WHERE username = ?";
     $stmt = sqlsrv_prepare($conn, $query, [$email]);
-    if (sqlsrv_execute($stmt)) {
+
+    if ($stmt && sqlsrv_execute($stmt)) {
         $user = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
+        // Verify user credentials
         if ($user && password_verify($password, $user['password'])) {
-            // Store the user's full name and email in the session
-            $_SESSION['fullname'] = $user['fullname'];
-            $_SESSION['email'] = $email;
+            // Store user information in the session
+            $_SESSION['user_id'] = $user['id'];          // Store user ID
+            $_SESSION['fullname'] = $user['fullname'];  // Store full name
+            $_SESSION['email'] = $email;               // Store email
 
             // Redirect to the dashboard
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid email or password.";
+            echo "<p>Invalid email or password.</p>";
         }
     } else {
-        echo "Error executing query.";
+        echo "<p>Error executing query: " . print_r(sqlsrv_errors(), true) . "</p>";
     }
 }
 ?>
