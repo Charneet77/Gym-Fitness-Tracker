@@ -55,7 +55,7 @@ $fullname = $_SESSION['fullname']; // Assuming 'username' was set during login
             <button onclick="location.href='attendance.php'">Attendance</button>
             <button onclick="location.href='progress_tracking.php'">Progress Tracking</button>
             <button onclick="location.href='schedule_appointments.php'">Appointments</button>
-            <button onclick="location.href='reports.php'">Reports</button>
+            <!--<button onclick="location.href='reports.php'">Reports</button>-->
         </div>
     </div>
 

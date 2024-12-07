@@ -17,11 +17,11 @@ $connectionOptions = [
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
 if (!$conn) {
-    die("Database connection failed: " . print_r(sqlsrv_errors(), true));
+    die(print_r(sqlsrv_errors(), true));
 }
 
 // Fetch progress history for the logged-in user
-$query = "SELECT date_tracked, height_cm, weight_kg, bmi FROM ProgressTracker WHERE user_id = ? ORDER BY date_tracked DESC";
+$query = "SELECT progress_id, date_tracked, height_cm, weight_kg, bmi FROM ProgressTracker WHERE user_id = ? ORDER BY date_tracked DESC";
 $params = [$_SESSION['user_id']];
 $stmt = sqlsrv_query($conn, $query, $params);
 
@@ -31,17 +31,13 @@ if (!$stmt) {
 
 // Function to determine BMI category
 function getBMICategory($bmi) {
-    if ($bmi < 18.5) {
-        return "Underweight";
-    } elseif ($bmi >= 18.5 && $bmi < 24.9) {
-        return "Normal weight";
-    } elseif ($bmi >= 25 && $bmi < 29.9) {
-        return "Overweight";
-    } else {
-        return "Obese";
-    }
+    if ($bmi < 18.5) return "Underweight";
+    if ($bmi >= 18.5 && $bmi < 24.9) return "Normal weight";
+    if ($bmi >= 25 && $bmi < 29.9) return "Overweight";
+    return "Obese";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +50,10 @@ function getBMICategory($bmi) {
     <div class="progress-tracking-container">
         <header>
             <h1>Progress Tracking</h1>
-            <button class="back-button" onclick="goBack()">Back</button>
+            <button class="back-button" onclick="window.history.back();">Back</button>
+            <form method="POST" action="clear_progress.php" style="display:inline;">
+                <button type="submit" class="clear-button">Clear All Progress</button>
+            </form>
         </header>
 
         <!-- BMI Calculator -->
@@ -79,16 +78,18 @@ function getBMICategory($bmi) {
                     echo "<li>";
                     echo "<p><strong>Date:</strong> " . $row['date_tracked']->format('Y-m-d') . "</p>";
                     echo "<p><strong>Height:</strong> " . $row['height_cm'] . " cm | <strong>Weight:</strong> " . $row['weight_kg'] . " kg | <strong>BMI:</strong> " . $row['bmi'] . " (<em>$bmiCategory</em>)</p>";
+
+                    // Delete Button
+                    echo "<form method='POST' action='delete_progress.php' style='display:inline;'>";
+                    echo "<input type='hidden' name='progress_id' value='{$row['progress_id']}'>";
+                    echo "<button type='submit' class='delete-button'>Delete</button>";
+                    echo "</form>";
+
                     echo "</li>";
                 }
                 ?>
             </ul>
         </section>
     </div>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
 </body>
 </html>

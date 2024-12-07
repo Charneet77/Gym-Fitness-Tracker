@@ -15,24 +15,24 @@ if (!$conn) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_SESSION['user_id'];
-    $height = $_POST['height'];
-    $weight = $_POST['weight'];
+    $progress_id = $_POST['progress_id'];
+    $new_height = $_POST['new_height'];
+    $new_weight = $_POST['new_weight'];
 
-    // Calculate BMI
-    $height_m = $height / 100;
-    $bmi = $weight / ($height_m * $height_m);
+    // Calculate new BMI
+    $height_m = $new_height / 100;
+    $new_bmi = $new_weight / ($height_m * $height_m);
 
-    // Insert progress data into the database
-    $query = "INSERT INTO ProgressTracker (user_id, height_cm, weight_kg, bmi, date_tracked) VALUES (?, ?, ?, ?, GETDATE())";
-    $params = [$user_id, $height, $weight, $bmi];
+    // Update the progress entry
+    $query = "UPDATE ProgressTracker SET height_cm = ?, weight_kg = ?, bmi = ?, is_updated = 1 WHERE progress_id = ?";
+    $params = [$new_height, $new_weight, $new_bmi, $progress_id];
     $stmt = sqlsrv_prepare($conn, $query, $params);
 
     if (sqlsrv_execute($stmt)) {
         header("Location: progress_tracking.php");
         exit();
     } else {
-        echo "Error: " . print_r(sqlsrv_errors(), true);
+        echo "Error updating progress: " . print_r(sqlsrv_errors(), true);
     }
 }
 ?>
