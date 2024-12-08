@@ -68,11 +68,12 @@ header h1 {
 }
 
 .qr-code img {
-    width: 150px;
-    height: 150px;
+    width: 200px; /* Increase size if necessary */
+    height: 200px; /* Ensure it maintains aspect ratio */
     border-radius: 5px;
     background-color: #fff;
 }
+
 
 .stats p {
     margin: 5px 0;

@@ -11,5 +11,5 @@ function viewProgress() {
 function assignNewPlan() {
     alert("Redirecting to assign a new workout plan...");
     // Add your redirection code here
-    window.location.href = "workout_plan.php";
+    window.location.href = "assign_new_plan.php";
 }
